@@ -1,0 +1,12 @@
+aws lambda create-function \
+--region "eu-west-1" \
+--profile "developerPlayground" \
+--function-name "KelvinTest" \
+--description "Fetching report from DFP." \
+--runtime "java8" \
+--role "arn:aws:iam::702972749545:role/lambda_s3_exec_role" \
+--handler "dfpfetchlambda.Main::handler" \
+--memory-size 128 \
+--timeout 60 \
+--zip-file "fileb://target/scala-2.11/dfp-fetch-lambda-assembly-1.0.jar" \
+--publish

@@ -1,0 +1,6 @@
+aws lambda update-function-code \
+--region "eu-west-1" \
+--profile "developerPlayground" \
+--function-name "KelvinTest" \
+--zip-file "fileb://target/scala-2.11/dfp-fetch-lambda-assembly-1.0.jar" \
+--publish
