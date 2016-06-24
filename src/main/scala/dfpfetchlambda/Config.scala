@@ -11,17 +11,17 @@ object Config {
   }
 
   object dfp {
-    val clientId = getRequired("dfp.clientId")
-    val clientSecret = getRequired("dfp.clientSecret")
-    val refreshToken = getRequired("dfp.refreshToken")
+    val clientId = getRequired("clientId")
+    val clientSecret = getRequired("clientSecret")
+    val refreshToken = getRequired("refreshToken")
     val appName = "Hosted report fetcher"
     val networkCode = "59666047"
   }
 
   object s3 {
-    val configBucketName = "kelvin-test"
-    val configKey = "config.properties"
-    val reportBucketName = "kelvin-test"
-    val reportKey = "dfp-report"
+    val configBucketName = "omniture-dash-data"
+    val configKey = "DfpApi.properties"
+    val reportBucketName = "omniture-dash-data"
+    val reportKey = "DfpCommercialLabsHostedCampaigns.csv"
   }
 }
