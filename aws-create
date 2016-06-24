@@ -1,10 +1,10 @@
 aws lambda create-function \
 --region "eu-west-1" \
---profile "developerPlayground" \
---function-name "KelvinTest" \
---description "Fetching report from DFP." \
+--profile "dataScience" \
+--function-name "uploadCommercialHostedToS3" \
+--description "Uploads commercial hosted content performance report from DFP to S3.  Source: https://github.com/kelvin-chappell/dfp-fetch-lambda." \
 --runtime "java8" \
---role "arn:aws:iam::702972749545:role/lambda_s3_exec_role" \
+--role "arn:aws:iam::728881615985:role/lambda_s3_exec_role" \
 --handler "dfpfetchlambda.Main::handler" \
 --memory-size 128 \
 --timeout 60 \
