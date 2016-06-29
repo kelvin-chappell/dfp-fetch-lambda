@@ -7,6 +7,6 @@ aws lambda create-function \
 --role "arn:aws:iam::728881615985:role/lambda_s3_exec_role" \
 --handler "dfpfetchlambda.Main::handler" \
 --memory-size 256 \
---timeout 75 \
+--timeout 90 \
 --zip-file "fileb://target/scala-2.11/dfp-fetch-lambda-assembly-1.0.jar" \
 --publish
