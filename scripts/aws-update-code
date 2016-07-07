@@ -1,3 +1,5 @@
+sbt clean assembly
+
 aws lambda update-function-code \
 --region "eu-west-1" \
 --profile "dataScience" \

@@ -1,3 +1,5 @@
+sbt clean assembly
+
 aws lambda create-function \
 --region "eu-west-1" \
 --profile "dataScience" \
