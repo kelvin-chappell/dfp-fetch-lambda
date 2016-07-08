@@ -48,9 +48,9 @@ object Config {
   }
 
   object s3 {
-    val configBucketName = "omniture-dash-data"
-    val configKey = "DfpApi.properties"
+    val configBucketName = "dfp-credentials"
+    val configKey = "api.properties"
     val reportBucketName = "omniture-dash-data"
-    val reportKey = "DfpCommercialLabsHostedCampaigns.csv"
+    val reportSubfolder = "dfp"
   }
 }

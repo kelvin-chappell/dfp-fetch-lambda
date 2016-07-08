@@ -6,7 +6,7 @@ import com.google.api.ads.dfp.axis.factory.DfpServices
 import com.google.api.ads.dfp.axis.utils.v201605.{ReportDownloader, StatementBuilder}
 import com.google.api.ads.dfp.axis.v201605.Column.{TOTAL_INVENTORY_LEVEL_CLICKS, TOTAL_INVENTORY_LEVEL_CTR, TOTAL_INVENTORY_LEVEL_IMPRESSIONS}
 import com.google.api.ads.dfp.axis.v201605.DateRangeType.REACH_LIFETIME
-import com.google.api.ads.dfp.axis.v201605.Dimension.{DATE, LINE_ITEM_ID, LINE_ITEM_NAME}
+import com.google.api.ads.dfp.axis.v201605.Dimension.{DATE, LINE_ITEM_ID}
 import com.google.api.ads.dfp.axis.v201605.ExportFormat.CSV_DUMP
 import com.google.api.ads.dfp.axis.v201605._
 import com.google.api.ads.dfp.lib.client.DfpSession
@@ -55,7 +55,7 @@ object Dfp {
 
 object ReportQueries {
 
-  val hostedCampaigns: ReportQuery = {
+  val allHostedCampaigns: ReportQuery = {
     val hostedOrderId = 345535767
     val sponsorCustomFieldId = 1527
 
@@ -67,7 +67,7 @@ object ReportQueries {
       .withBindVariableValue("hostedOrderId", hostedOrderId)
       .toStatement
     )
-    query.setDimensions(Array(DATE, LINE_ITEM_ID, LINE_ITEM_NAME))
+    query.setDimensions(Array(DATE, LINE_ITEM_ID))
     query.setCustomFieldIds(Array(sponsorCustomFieldId))
     query.setColumns(
       Array(
@@ -79,14 +79,50 @@ object ReportQueries {
 
     query
   }
+
+  private def hostedLineItems(lineItemIds: Long*): ReportQuery = {
+    val query = new ReportQuery()
+    query.setDateRangeType(REACH_LIFETIME)
+    query.setStatement(
+      new StatementBuilder()
+      .where(s"LINE_ITEM_ID IN (${lineItemIds.mkString(",")})")
+      .toStatement
+    )
+    query.setDimensions(Array(DATE))
+    query.setColumns(
+      Array(
+        TOTAL_INVENTORY_LEVEL_IMPRESSIONS,
+        TOTAL_INVENTORY_LEVEL_CLICKS,
+        TOTAL_INVENTORY_LEVEL_CTR
+      )
+    )
+    query
+  }
+
+  val renaultMerchComponents = hostedLineItems(
+    119417007,
+    119508327,
+    121546407,
+    121572687,
+    121592247,
+    123009207,
+    123009327,
+    123009447
+  )
 }
 
 object TestReport extends App {
 
+  def report(rptName: String, qry: ReportQuery) = {
+    println(rptName)
+    val rpt = Dfp.fetchReport(qry)
+    println(rpt)
+  }
+
   println("*** Start ***")
 
-  val report = Dfp.fetchReport(ReportQueries.hostedCampaigns)
-  println(report)
+  report("*** all ***", ReportQueries.allHostedCampaigns)
+  report("*** renault merch ***", ReportQueries.renaultMerchComponents)
 
   println("*** End ***")
 }

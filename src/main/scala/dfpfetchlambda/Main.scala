@@ -1,10 +1,18 @@
 package dfpfetchlambda
 
-import dfpfetchlambda.ReportQueries.hostedCampaigns
+import dfpfetchlambda.ReportQueries.{allHostedCampaigns, renaultMerchComponents}
 
 class Main {
   def handler(): Unit = {
-    val report = Dfp.fetchReport(hostedCampaigns)
-    S3.write(report)
+
+    S3.write(
+      report = Dfp.fetchReport(allHostedCampaigns),
+      dstFile = "LabsHostedCampaigns.csv"
+    )
+
+    S3.write(
+      report = Dfp.fetchReport(renaultMerchComponents),
+      dstFile = "LabsRenaultMerch.csv"
+    )
   }
 }

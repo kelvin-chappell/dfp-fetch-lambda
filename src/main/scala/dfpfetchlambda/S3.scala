@@ -14,13 +14,14 @@ object S3 {
   def openS3PropertiesStream(): InputStream =
     client.getObject(new GetObjectRequest(s3.configBucketName, s3.configKey)).getObjectContent
 
-  def write(report: String): Unit = {
+  def write(report: String, dstFile: String): Unit = {
     val inputStream = new StringInputStream(report)
 
     val metadata = new ObjectMetadata()
     metadata.setContentType("text/csv; charset=utf-8")
     metadata.setContentLength(report.getBytes.length)
 
-    client.putObject(s3.reportBucketName, s3.reportKey, inputStream, metadata)
+    val key = s"${s3.reportSubfolder}/$dstFile"
+    client.putObject(s3.reportBucketName, key, inputStream, metadata)
   }
 }
