@@ -20,7 +20,7 @@ class CsvTest extends Specification {
       |2016-07-05,124416927,oB,cC,fA,0,0,0.0000
     """.stripMargin
 
-  "byCampaignAndFormat" >> {
+  "splitByCampaignAndFormat" >> {
     Csv.splitByCampaignAndFormat(report) must_== Seq(
       DataSet(
         name = "oA-cA-fA.csv",
