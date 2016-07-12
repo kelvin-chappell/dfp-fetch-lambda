@@ -1,12 +1,12 @@
 package dfpfetchlambda
 
-import dfpfetchlambda.ReportQueries.renaultMerchComponents
+import dfpfetchlambda.ReportQueries.leffeMerchComponents
 
 class Main {
   def handler(): Unit = {
     S3.write(
-      report = Dfp.fetchReport(renaultMerchComponents),
-      dstFile = "LabsHostedRenaultMerch.csv"
+      report = Dfp.fetchReport(leffeMerchComponents),
+      dstFile = "LabsHostedLeffeMerch.csv"
     )
   }
 }

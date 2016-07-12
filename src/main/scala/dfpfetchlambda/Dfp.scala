@@ -109,6 +109,8 @@ object ReportQueries {
     123009327,
     123009447
   )
+
+  val leffeMerchComponents = hostedLineItems(124416927)
 }
 
 object TestReport extends App {
