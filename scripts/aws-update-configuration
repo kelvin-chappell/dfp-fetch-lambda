@@ -2,4 +2,4 @@ aws lambda update-function-configuration \
 --region "eu-west-1" \
 --profile "dataScience" \
 --function-name "uploadCommercialHostedToS3" \
---timeout 90
+--timeout 120
