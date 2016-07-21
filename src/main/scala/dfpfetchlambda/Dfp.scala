@@ -16,20 +16,25 @@ import scala.io.Source
 
 object Dfp {
 
-  def fetchReport(qry: ReportQuery): String = {
+  def inSession[T](action: DfpSession => T): T = {
 
     val credentials = new OfflineCredentials.Builder()
-      .forApi(DFP)
-      .withClientSecrets(dfp.clientId, dfp.clientSecret)
-      .withRefreshToken(dfp.refreshToken)
-      .build()
-      .generateCredential()
+                      .forApi(DFP)
+                      .withClientSecrets(dfp.clientId, dfp.clientSecret)
+                      .withRefreshToken(dfp.refreshToken)
+                      .build()
+                      .generateCredential()
 
     val session = new DfpSession.Builder()
-      .withOAuth2Credential(credentials)
-      .withApplicationName(dfp.appName)
-      .withNetworkCode(dfp.networkCode)
-      .build()
+                  .withOAuth2Credential(credentials)
+                  .withApplicationName(dfp.appName)
+                  .withNetworkCode(dfp.networkCode)
+                  .build()
+
+    action(session)
+  }
+
+  def fetchReport(qry: ReportQuery)(session: DfpSession): String = {
 
     val reportService = new DfpServices().get(session, classOf[ReportServiceInterface])
 
@@ -118,7 +123,7 @@ object TestReport extends App {
 
   def report(rptName: String, qry: ReportQuery) = {
     println(rptName)
-    val rpt = Dfp.fetchReport(qry)
+    val rpt = Dfp.inSession(Dfp.fetchReport(qry))
     println(rpt)
   }
 
